@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,7 +19,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.fasterxml.jackson.databind.util.JSONWrappedObject;
 import com.iset.produits.entities.Produit;
 import com.iset.produits.service.ProduitServiceImpl;
@@ -34,54 +35,61 @@ public class ProduitsApplication implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        Produit prod1 = new Produit("PC Asus", 1500.500, new Date());
-        Produit prod2 = new Produit("PC Dell", 2000.500, new Date());
-        Produit prod3 = new Produit("PC Toshiba", 2500.500, new Date());
-        service.saveProduit(prod1);
-        service.saveProduit(prod2);
-        service.saveProduit(prod3);
+        // Produit prod1 = new Produit("PC Asus", 1500.500, new Date());
+        // Produit prod2 = new Produit("PC Dell", 2000.500, new Date());
+        // Produit prod3 = new Produit("PC Toshiba", 2500.500, new Date());
+        // service.saveProduit(prod1);
+        // service.saveProduit(prod2);
+        // service.saveProduit(prod3);
         List<Produit> list = service.getAllProduits();
         System.out.println(list.size() == 0 ? "Aucun produit trouvée" : "");
         for (Produit p : list) {
-            System.out.println(p.getNomProduit());
-        }
+			// service.deleteProduit(p);
+			System.out.println(p.toString());
+		}
     }
-	/*
-	@GetMapping("/produits/{id}")
-	public JSONWrappedObject getById(@PathVariable(name = "id", required = false) String id) {
-		Produit p = service.getProduit(Long.parseLong(id));
-		if(p!=null)
-			return new JSONWrappedObject("","",service.getProduit(Long.parseLong(id)));
-		return new JSONWrappedObject("","",(Object)"Produit not found");
-	}
 	@GetMapping("/produits")
-	public List<Produit> getAll() {
-		return service.getAllProduits();
+	public ResponseEntity<List<Produit>> getAll() {
+		List<Produit> list = service.getAllProduits();
+		return list.size()!=0?ResponseEntity.accepted().body(list):new ResponseEntity(HttpStatus.NOT_FOUND);
+
+		// return service.getAllProduits();
+	}
+	@GetMapping("/produits/{id}")
+	public ResponseEntity<Produit> getById(@PathVariable(name = "id", required = false) String id) {
+		Produit p = service.getProduit(Long.parseLong(id));
+		return p!=null?ResponseEntity.accepted().body(service.getProduit(Long.parseLong(id))):new ResponseEntity(HttpStatus.NOT_FOUND);
 	}
 
 	@PostMapping("/produits")
-	public JSONWrappedObject create(@RequestBody Produit produit) {
+	public ResponseEntity<String> create(@RequestBody Produit produit) {
 		produit.setDateCreation(new Date());
-		Produit a = service.saveProduit(produit);
-		return new JSONWrappedObject("","",a!=null?"Created":"Error");
+		Produit a ;
+		if(produit.getNomProduit()==null||produit.getPrixProduit()==null) {
+			a=null;
+		}else{
+			 a = service.saveProduit(produit);
+		}
+        return a!=null?ResponseEntity.accepted().body(a.toString()):ResponseEntity.badRequest().body("Error");
 	}
 
 	@DeleteMapping("/produits/{id}")
-	public JSONWrappedObject delete(@PathVariable(name = "id", required = false) String id) {
-		return new JSONWrappedObject("","",service.deleteProduitById(Long.parseLong(id)));
+	public ResponseEntity<String> delete(@PathVariable(name = "id", required = false) String id) {
+		return service.deleteProduitById(Long.parseLong(id))?ResponseEntity.accepted().body("Produit deleted"):new ResponseEntity(HttpStatus.NOT_FOUND);
 	}
 	@RequestMapping(value = "/produits/{id}", method = RequestMethod.PUT)
-	public JSONWrappedObject update(@PathVariable(name = "id", required = false) String id,@RequestBody Produit produit) {
-		Produit ret = service.updateProduit(Long.parseLong(id),produit);
-
-		if (ret!=null) {
+	public ResponseEntity<String> update(@PathVariable(name = "id", required = false) String id,@RequestBody Produit produit) {
+		Boolean exist = service.existsById(Long.parseLong(id));
+		if (exist) {
+			Produit ret = new Produit();
 			Produit c = new Produit();
-			c.setDateCreation(ret.getDateCreation());
-			c.setNomProduit(ret.getNomProduit());
-			c.setPrixProduit(ret.getPrixProduit());
-			return new JSONWrappedObject("","",c);
-			}
-		return new JSONWrappedObject("","","Produit non existant");
+				ret = service.updateProduit(Long.parseLong(id),produit);
+				c = new Produit();
+				c.setDateCreation(ret.getDateCreation());
+				c.setNomProduit(ret.getNomProduit());
+				c.setPrixProduit(ret.getPrixProduit());
+			return c!=null?ResponseEntity.ok().body(ret.toString()):ResponseEntity.badRequest().build();
+		}
+		return ResponseEntity.notFound().build();
 	}
-	*/
 }
