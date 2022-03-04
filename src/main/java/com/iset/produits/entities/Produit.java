@@ -41,8 +41,21 @@ public class Produit {
 	}
 	public Produit() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
-	
+
+	public Long getIdProduit() {
+		return this.idProduit;
+	}
+
+	@Override
+	public String toString() {
+		return "{" +
+			" nomProduit='" + getNomProduit() + "'" +
+			", prixProduit='" + getPrixProduit() + "'" +
+			", dateCreation='" + getDateCreation() + "'" +
+			"}";
+	}
+
+
 	
 }
