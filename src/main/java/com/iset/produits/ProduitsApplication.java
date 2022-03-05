@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,9 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import com.fasterxml.jackson.databind.util.JSONWrappedObject;
 import com.iset.produits.entities.Produit;
 import com.iset.produits.service.ProduitServiceImpl;
 
@@ -51,14 +48,15 @@ public class ProduitsApplication implements CommandLineRunner {
 	@GetMapping("/produits")
 	public ResponseEntity<List<Produit>> getAll() {
 		List<Produit> list = service.getAllProduits();
-		return list.size()!=0?ResponseEntity.accepted().body(list):new ResponseEntity(HttpStatus.NOT_FOUND);
+		
+		return list.size()!=0?ResponseEntity.accepted().body(list):ResponseEntity.notFound().build();
 
 		// return service.getAllProduits();
 	}
 	@GetMapping("/produits/{id}")
 	public ResponseEntity<Produit> getById(@PathVariable(name = "id", required = false) String id) {
 		Produit p = service.getProduit(Long.parseLong(id));
-		return p!=null?ResponseEntity.accepted().body(service.getProduit(Long.parseLong(id))):new ResponseEntity(HttpStatus.NOT_FOUND);
+		return p!=null?ResponseEntity.accepted().body(service.getProduit(Long.parseLong(id))):ResponseEntity.notFound().build();
 	}
 
 	@PostMapping("/produits")
@@ -75,7 +73,7 @@ public class ProduitsApplication implements CommandLineRunner {
 
 	@DeleteMapping("/produits/{id}")
 	public ResponseEntity<String> delete(@PathVariable(name = "id", required = false) String id) {
-		return service.deleteProduitById(Long.parseLong(id))?ResponseEntity.accepted().body("Produit deleted"):new ResponseEntity(HttpStatus.NOT_FOUND);
+		return service.deleteProduitById(Long.parseLong(id))?ResponseEntity.accepted().body("Produit deleted"):ResponseEntity.notFound().build();
 	}
 	@RequestMapping(value = "/produits/{id}", method = RequestMethod.PUT)
 	public ResponseEntity<String> update(@PathVariable(name = "id", required = false) String id,@RequestBody Produit produit) {
