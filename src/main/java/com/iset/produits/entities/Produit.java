@@ -47,14 +47,17 @@ public class Produit {
 		return this.idProduit;
 	}
 
+
 	@Override
 	public String toString() {
 		return "{" +
-			" nomProduit='" + getNomProduit() + "'" +
+			" idProduit='" + getIdProduit() + "'" +
+			", nomProduit='" + getNomProduit() + "'" +
 			", prixProduit='" + getPrixProduit() + "'" +
 			", dateCreation='" + getDateCreation() + "'" +
 			"}";
 	}
+	
 
 
 	
