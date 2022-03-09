@@ -43,6 +43,9 @@ public class Produit {
 		super();
 	}
 
+	public void setIdProduit(Long idProduit) {
+		this.idProduit = idProduit;
+	}
 	public Long getIdProduit() {
 		return this.idProduit;
 	}
