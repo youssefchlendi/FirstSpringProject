@@ -32,16 +32,15 @@ public class ProduitsApplication implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        // Produit prod1 = new Produit("PC Asus", 1500.500, new Date());
-        // Produit prod2 = new Produit("PC Dell", 2000.500, new Date());
-        // Produit prod3 = new Produit("PC Toshiba", 2500.500, new Date());
-        // service.saveProduit(prod1);
-        // service.saveProduit(prod2);
-        // service.saveProduit(prod3);
+         Produit prod1 = new Produit("PC Asus", 1500.500, new Date());
+         Produit prod2 = new Produit("PC Dell", 2000.500, new Date());
+         Produit prod3 = new Produit("PC Toshiba", 2500.500, new Date());
+         service.saveProduit(prod1);
+         service.saveProduit(prod2);
+         service.saveProduit(prod3); 
         List<Produit> list = service.getAllProduits();
         System.out.println(list.size() == 0 ? "Aucun produit trouvée" : "");
         for (Produit p : list) {
-			// service.deleteProduit(p);
 			System.out.println(p.toString());
 		}
     }
