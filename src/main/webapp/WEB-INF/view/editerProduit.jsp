@@ -1,5 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=windows-1256"
-	pageEncoding="windows-1256"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
@@ -11,7 +11,7 @@
 	rel="stylesheet"
 	integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
 	crossorigin="anonymous">
-<meta charset="windows-1256">
+<meta charset="UTF-8">
 <title>Modifier un Produit</title>
 </head>
 <body>
@@ -22,7 +22,7 @@
 				<!-- form card login -->
 				<div class="card card-outline-secondary">
 					<div class="card-header">
-						<h3 class="mb-0">Produit</h3>
+						<h3 class="mb-0">Modifier produit</h3>
 					</div>
 					<div class="card-body">
 						<form class="form" id="formLogin" name="formLogin" role="form"
@@ -39,7 +39,7 @@
 							<fmt:formatDate pattern="yyyy-MM-dd" value="${produit.dateCreation}"
 				var="formatDate" />
 							
-								<label>date création</label> <input class="form-control"
+								<label>date crأ©ation</label> <input class="form-control"
 									id="date" name="date" required="" value="${formatDate}" type="date">
 							</div>
 							<input class="btn btn-success my-3 btn-lg float-right"

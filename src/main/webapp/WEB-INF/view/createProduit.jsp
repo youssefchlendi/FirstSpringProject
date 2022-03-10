@@ -1,18 +1,19 @@
-<%@ page language="java" contentType="text/html; charset=windows-1256"
-	pageEncoding="windows-1256"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="windows-1256">
 <title>Créer un Produit</title>
 <link
 	href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
 	rel="stylesheet"
 	integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
 	crossorigin="anonymous">
+	<meta charset="UTF-8">
+
 </head>
 <body>
 	<div class="container my-4">
@@ -22,7 +23,7 @@
 				<!-- form card login -->
 				<div class="card card-outline-secondary">
 					<div class="card-header">
-						<h3 class="mb-0">Login</h3>
+						<h3 class="mb-0">Créer produit</h3>
 					</div>
 					<div class="card-body">
 						<c:if test="${not empty msg}">
@@ -39,7 +40,7 @@
 									name="prixProduit" required="" type="number">
 							</div>
 							<div class="form-group">
-								<label>date cr�ation</label> <input class="form-control"
+								<label>date création</label> <input class="form-control"
 									id="date" name="date" required="" type="date">
 							</div>
 							<input class="btn btn-success my-3 btn-lg float-right"
