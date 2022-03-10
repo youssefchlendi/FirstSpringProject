@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import com.iset.produits.dao.ProduitRepository;
+// import com.iset.produits.dao.ProduitRepository;
 import com.iset.produits.entities.Produit;
 import com.iset.produits.service.ProduitServiceImpl;
 

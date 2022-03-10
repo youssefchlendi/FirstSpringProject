@@ -51,12 +51,18 @@ public class CatController {
 	@RequestMapping("/supprimerProduit")
 	public String supprimerProduit(@RequestParam("id") Long id, ModelMap modelMap) {
 		Produit p = new Produit();
+		Produit p1 = produitService.getProduit(id);
 		p.setIdProduit(id);
 		produitService.deleteProduit(p);
 		List<Produit> prods = produitService.getAllProduits();
 		modelMap.addAttribute("produits", prods);
-		modelMap.addAttribute("msg", "Produit supprimée");
-		modelMap.addAttribute("type", "danger");
+		if (p1!=null){
+			modelMap.addAttribute("msg", "Produit supprimée");
+			modelMap.addAttribute("type", "danger");
+		}else{
+			modelMap.addAttribute("msg", "Id non existant");
+			modelMap.addAttribute("type", "warning");
+		}
 
 		return "listeProduits";
 	}
