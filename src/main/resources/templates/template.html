@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<link rel="stylesheet" type="text/css"
+	href="bootstrap.css" />
+    <script src="bootstrap.js"></script>
+        <script src="popper.min.js"></script>
+            <script src="jquery.js"></script>
+<head>
+
+<meta charset="utf-8">
+<title>Gestion des Produits</title>
+</head>
+<body>
+	<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+		<!-- Brand -->
+		<a class="navbar-brand" th:href="@{ListeProduits}">Gestion de produits</a>
+		<!-- Links -->
+		<ul class="navbar-nav">
+			<!-- Dropdown -->
+			<li class="nav-item dropdown"><a
+				class="nav-link dropdown-toggle" th:href="@{ListeProduits}" id="navbardrop" data-
+				toggle="dropdown"> Produits </a>
+				<div class="dropdown-menu">
+					<a class="dropdown-item" th:href="@{showCreate}">Ajouter</a> <a
+						class="dropdown-item" th:href="@{ListeProduits}">Lister</a>
+				</div></li>
+		</ul>
+		<div class="dropdown">
+  <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    Dropdown button
+  </button>
+  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+    <a class="dropdown-item" href="#">Action</a>
+    <a class="dropdown-item" href="#">Another action</a>
+    <a class="dropdown-item" href="#">Something else here</a>
+  </div>
+</div>
+	</nav>
+	<section layout:fragment="Mycontent"></section>
+</body>
+</html>
