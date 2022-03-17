@@ -11,6 +11,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import com.iset.produits.entities.Produit;
 import com.iset.produits.service.ProduitServiceImpl;
 
+import org.springframework.data.domain.Page;
 
 @SpringBootTest
 class ProduitsApplicationTests {
@@ -63,6 +64,15 @@ class ProduitsApplicationTests {
 //			produitRepository.findAll();
 	for (Produit p:prods)
 	System.out.println(p.getNomProduit());
+	}
+	@Test
+	public void testFindByNomProduitContains()
+	{
+	Page<Produit> prods = service.getAllProduitsParPage(0,2);
+	System.out.println(prods.getSize());
+	System.out.println(prods.getTotalElements());
+	System.out.println(prods.getTotalPages());
+	prods.getContent().forEach(p -> {System.out.println(p.toString());});
 	}
 	
 }
