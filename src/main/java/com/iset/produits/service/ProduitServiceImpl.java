@@ -1,4 +1,7 @@
 package com.iset.produits.service;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+
 
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,6 +50,11 @@ public class ProduitServiceImpl implements ProduitService{
 	@Override
 	public List<Produit> getAllProduits() {
 	return produitRepository.findAll();
+	}
+	@Override
+	public Page<Produit> getAllProduitsParPage(int page, int size) {
+	// TODO Auto-generated method stub
+	return produitRepository.findAll(PageRequest.of(page, size));
 	}
 
 }
