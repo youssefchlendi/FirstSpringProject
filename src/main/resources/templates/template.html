@@ -27,6 +27,11 @@
 					<a class="dropdown-item" th:href="@{showCreate}">Ajouter</a> <a
 						class="dropdown-item" th:href="@{ListeProduits}">Lister</a>
 				</div></li>
+				<!-- search input bootstrap -->
+				<form class="ml-4 form-inline float-end" action="searchProduit" method="get">
+					<input name="name" class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+					<button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+				</form>
 		</ul>
 	</nav>
 	<section layout:fragment="Mycontent"></section>
