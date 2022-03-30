@@ -3,6 +3,7 @@ package com.iset.produits.controllers;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+// import java.util.List;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -101,5 +102,17 @@ public class CatController {
 		modelMap.addAttribute("type", "warning");
 
 		return "listeProduits";
+	}
+	// function to search for produit by name
+	@RequestMapping("/searchProduit")
+	public String searchProduit(@RequestParam("name") String name, ModelMap modelMap,
+			@RequestParam(name = "page", defaultValue = "0") int page,
+			@RequestParam(name = "size", defaultValue = "2") int size) {
+		Page<Produit> prods = produitService.findByNomProduitContains(name,page,size);
+		modelMap.addAttribute("produits", prods);
+		modelMap.addAttribute("pages", new int[prods.getTotalPages()]);
+		modelMap.addAttribute("currentPage", page);
+		modelMap.addAttribute("name", name);
+		return "search";
 	}
 }
