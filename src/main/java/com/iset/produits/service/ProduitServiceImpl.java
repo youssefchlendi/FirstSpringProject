@@ -7,6 +7,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.iset.produits.entities.Categorie;
 import com.iset.produits.entities.Produit;
 import com.iset.produits.dao.*;
 @Service
@@ -53,8 +54,42 @@ public class ProduitServiceImpl implements ProduitService{
 	}
 	@Override
 	public Page<Produit> getAllProduitsParPage(int page, int size) {
-	// TODO Auto-generated method stub
 	return produitRepository.findAll(PageRequest.of(page, size));
 	}
+
+	@Override
+	public List<Produit> findByNomProduit(String nom) {
+		return produitRepository.findByNomProduit(nom);
+	};
+
+	@Override
+	public Page<Produit> findByNomProduitContains(String nom ,int page,int size){
+		return produitRepository.findAllByNomProduitContains(nom,PageRequest.of(page, size));
+	};
+
+	@Override
+	public List<Produit> findByNomPrix(String nom, Double prix){
+		return produitRepository.findByNomPrix(nom, prix);
+	};
+
+	@Override
+	public List<Produit> findByCategorie(Categorie categorie){
+		return produitRepository.findByCategorie(categorie);
+	};
+
+	@Override
+	public List<Produit> findByCategorieIdCat(Long id){
+		return produitRepository.findByCategorieIdCat(id);
+	};
+
+	@Override
+	public List<Produit> findByOrderByNomProduitAsc(){
+		return produitRepository.findByOrderByNomProduitAsc();
+	};
+
+	@Override
+	public List<Produit> trierProduitsNomsPrix(){
+		return produitRepository.trierProduitsNomsPrix();
+	};
 
 }
