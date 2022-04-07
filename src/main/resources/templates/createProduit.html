@@ -3,16 +3,37 @@
 	layout:decorator="template">
 
 <head>
-	<link rel="stylesheet" type="text/css"
-href="webjars/bootstrap/4.3.1/css/bootstrap.min.css" />
-<script type="text/javascript"
-src="webjars/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-<script src="webjars/jquery/3.5.1/jquery.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="webjars/bootstrap/4.3.1/css/bootstrap.min.css" />
+	<script type="text/javascript" src="webjars/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+	<script src="webjars/jquery/3.5.1/jquery.min.js"></script>
 	<meta charset="utf-8">
 	<title>Create produit</title>
 </head>
 
 <body>
+	<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+		<!-- Brand -->
+		<a class="navbar-brand" th:href="@{ListeProduits}">Gestion de produits</a>
+		<!-- Links -->
+		<ul class="navbar-nav">
+			<!-- Dropdown -->
+			<li class="nav-item dropdown">
+				<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
+					data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+					Produits
+				</button>
+				<div class="dropdown-menu">
+					<a class="dropdown-item" th:href="@{showCreate}">Ajouter</a> <a class="dropdown-item"
+						th:href="@{ListeProduits}">Lister</a>
+				</div>
+			</li>
+			<!-- search input bootstrap -->
+			<form class="ml-4 form-inline float-end" action="searchProduit" method="get">
+				<input name="name" class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+				<button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+			</form>
+		</ul>
+	</nav>
 	<div layout:fragment="Mycontent">
 		<div class="container my-4">
 			<div class="row justify-content-center">
@@ -21,25 +42,35 @@ src="webjars/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 					<!-- form card login -->
 					<div class="card card-outline-secondary">
 						<div class="card-header">
-							<h3 class="mb-0">Créer produit</h3>
+							
+							<h3 th:text="${edit}?'Modifier produit':'Créer produit'" class="mb-0"></h3>
 						</div>
 						<div class="card-body">
-							<form class="form" id="formLogin" name="formLogin" role="form" action="saveProduit"
+							<form th:action="${edit}?'updateProduit':'saveProduit'"  class="form" id="formLogin" name="formLogin" role="form" action="saveProduit"
 								method="post">
 								<div class="form-group">
-									<label for="nomProduit">Nom</label> <input class="form-control" id="nomProduit"
-										name="nomProduit" required="" type="text">
+									<label class="control-label">Nom Produit :</label> <input type="text"
+										name="nomProduit" class="form-control" th:value="${produit.nomProduit}" /> <span
+										th:errors=${produit.nomProduit} class="text-danger"> </span>
 								</div>
 								<div class="form-group">
-									<label>Prix</label> <input class="form-control" id="prixProduit" name="prixProduit"
-										required="" type="number">
+									<label class="control-label">Prix Produit :</label> <input type="text"
+										name="prixProduit" class="form-control" th:value="${produit.prixProduit}" />
+									<span th:errors=${produit.prixProduit} class="text-danger"> </span>
 								</div>
 								<div class="form-group">
-									<label>date création</label> <input class="form-control" id="date" name="date"
-										required="" type="date">
+									<label class="control-label">date création :</label> <input type="date"
+										name="dateCreation" class="form-control" th:value="${#dates.format(produit.dateCreation, 'yyyy-MM-dd')}" /> <span
+										th:errors=${produit.dateCreation} class="text-danger">
+									</span>
+									<input type="hidden" name="idProduit" th:value="${produit.idProduit}" />
 								</div>
-								<input class="btn btn-success my-3 btn-lg float-right" type="submit" value="ajouter">
+								<input th:value="${edit}?'modifier':'ajouter'" class="btn btn-success my-3 btn-lg float-right"
+								type="submit" >
+
+									
 							</form>
+							
 						</div>
 						<!--/card-block-->
 					</div>
