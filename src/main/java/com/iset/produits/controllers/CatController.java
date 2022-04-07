@@ -1,18 +1,16 @@
 package com.iset.produits.controllers;
 
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 // import java.util.List;
-import java.util.List;
+
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-// import org.springframework.web.servlet.view.RedirectView;
 
 import com.iset.produits.entities.Produit;
 import com.iset.produits.service.ProduitService;
@@ -24,27 +22,33 @@ public class CatController {
 	ProduitService produitService;
 
 	@RequestMapping("/showCreate")
-	public String showCreate() {
+	public String showCreate(ModelMap modelMap) {
+		modelMap.addAttribute("produit", new Produit());
+		modelMap.addAttribute("edit", false);
 		return "createProduit";
 	}
 
 	@RequestMapping("/saveProduit")
-	public String saveProduit(@ModelAttribute("produit") Produit produit, @RequestParam("date") String date,
+	public String saveProduit(
+			@Valid Produit produit,
+			BindingResult bindingResult,
 			ModelMap modelMap,
 			@RequestParam(name = "page", defaultValue = "0") int page,
 			@RequestParam(name = "size", defaultValue = "2") int size) throws ParseException {
-		SimpleDateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd");
-		Date dateCreation = dateformat.parse(String.valueOf(date));
-		produit.setDateCreation(dateCreation);
+		if (bindingResult.hasErrors()) {
+			modelMap.addAttribute("edit", false);
+			return "createProduit";
+		}
+		else {
 		Produit saveProduit = produitService.saveProduit(produit);
 		String msg = "produit enregistré avec Id " + saveProduit.getIdProduit();
 		Page<Produit> prods = produitService.getAllProduitsParPage(page, size);
 		modelMap.addAttribute("produits", prods);
 		modelMap.addAttribute("pages", new int[prods.getTotalPages()]);
-
 		modelMap.addAttribute("msg", msg);
 		modelMap.addAttribute("type", "success");
 		return "listeProduits";
+		}
 	}
 
 	@RequestMapping("/ListeProduits")
@@ -82,25 +86,28 @@ public class CatController {
 	public String editerProduit(@RequestParam("id") Long id, ModelMap modelMap) {
 		Produit p = produitService.getProduit(id);
 		modelMap.addAttribute("produit", p);
-		return "editerProduit";
+		modelMap.addAttribute("edit", true);
+		return "createProduit";
 	}
 
 	@RequestMapping("/updateProduit")
-	public String updateProduit(@ModelAttribute("produit") Produit produit, @RequestParam("date") String date,
+	public String updateProduit(
+			@Valid Produit produit,
+			BindingResult bindingResult,
 			ModelMap modelMap,
 			@RequestParam(name = "page", defaultValue = "0") int page,
 			@RequestParam(name = "size", defaultValue = "2") int size) throws ParseException {
 		// conversion de la date
-		SimpleDateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd");
-		Date dateCreation = dateformat.parse(String.valueOf(date));
-		produit.setDateCreation(dateCreation);
+		if (bindingResult.hasErrors()) {
+			modelMap.addAttribute("edit", true);
+			return "createProduit";
+		}
 		produitService.updateProduit(produit.getIdProduit(), produit);
 		Page<Produit> prods = produitService.getAllProduitsParPage(page, size);
 		modelMap.addAttribute("produits", prods);
 		modelMap.addAttribute("pages", new int[prods.getTotalPages()]);
 		modelMap.addAttribute("msg", "Produit modifiée");
 		modelMap.addAttribute("type", "warning");
-
 		return "listeProduits";
 	}
 	// function to search for produit by name
