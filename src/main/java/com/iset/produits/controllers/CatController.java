@@ -38,16 +38,15 @@ public class CatController {
 		if (bindingResult.hasErrors()) {
 			modelMap.addAttribute("edit", false);
 			return "createProduit";
-		}
-		else {
-		Produit saveProduit = produitService.saveProduit(produit);
-		String msg = "produit enregistré avec Id " + saveProduit.getIdProduit();
-		Page<Produit> prods = produitService.getAllProduitsParPage(page, size);
-		modelMap.addAttribute("produits", prods);
-		modelMap.addAttribute("pages", new int[prods.getTotalPages()]);
-		modelMap.addAttribute("msg", msg);
-		modelMap.addAttribute("type", "success");
-		return "listeProduits";
+		} else {
+			Produit saveProduit = produitService.saveProduit(produit);
+			String msg = "produit enregistré avec Id " + saveProduit.getIdProduit();
+			Page<Produit> prods = produitService.getAllProduitsParPage(page, size);
+			modelMap.addAttribute("produits", prods);
+			modelMap.addAttribute("pages", new int[prods.getTotalPages()]);
+			modelMap.addAttribute("msg", msg);
+			modelMap.addAttribute("type", "success");
+			return "listeProduits";
 		}
 	}
 
@@ -97,7 +96,6 @@ public class CatController {
 			ModelMap modelMap,
 			@RequestParam(name = "page", defaultValue = "0") int page,
 			@RequestParam(name = "size", defaultValue = "2") int size) throws ParseException {
-		// conversion de la date
 		if (bindingResult.hasErrors()) {
 			modelMap.addAttribute("edit", true);
 			return "createProduit";
@@ -110,12 +108,13 @@ public class CatController {
 		modelMap.addAttribute("type", "warning");
 		return "listeProduits";
 	}
+
 	// function to search for produit by name
 	@RequestMapping("/searchProduit")
 	public String searchProduit(@RequestParam("name") String name, ModelMap modelMap,
 			@RequestParam(name = "page", defaultValue = "0") int page,
 			@RequestParam(name = "size", defaultValue = "2") int size) {
-		Page<Produit> prods = produitService.findByNomProduitContains(name,page,size);
+		Page<Produit> prods = produitService.findByNomProduitContains(name, page, size);
 		modelMap.addAttribute("produits", prods);
 		modelMap.addAttribute("pages", new int[prods.getTotalPages()]);
 		modelMap.addAttribute("currentPage", page);
