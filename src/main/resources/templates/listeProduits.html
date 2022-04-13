@@ -1,89 +1,57 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-	layout:decorator="template">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+layout:decorate="template">
+
 <head>
-	<link rel="stylesheet" type="text/css"
-	href="webjars/bootstrap/4.3.1/css/bootstrap.min.css" />
-	<script type="text/javascript"
-	src="webjars/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="webjars/bootstrap/4.3.1/css/bootstrap.min.css" />
+	<script type="text/javascript" src="webjars/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 	<script src="webjars/jquery/3.5.1/jquery.min.js"></script>
-<link
-	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
-	rel="stylesheet">
-<meta charset="UTF-8">
-<!-- <title>Liste des Produits</title> -->
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+	<meta charset="UTF-8">
+	<!-- <title>Liste des Produits</title> -->
 </head>
+
 <body>
-	<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
-		<!-- Brand -->
-		<a class="navbar-brand" th:href="@{ListeProduits}">Gestion de produits</a>
-		<!-- Links -->
-		<ul class="navbar-nav">
-			<!-- Dropdown -->
-			<li class="nav-item dropdown">
-				<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-					Produits
-				  </button>
-				<div class="dropdown-menu">
-					<a class="dropdown-item" th:href="@{showCreate}">Ajouter</a> <a
-						class="dropdown-item" th:href="@{ListeProduits}">Lister</a>
-				</div></li>
-				<!-- search input bootstrap -->
-				<form class="ml-4 form-inline float-end" action="searchProduit" method="get">
-					<input name="name" class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-					<button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-				</form>
-		</ul>
-	</nav>
+
 	<div layout:fragment="Mycontent">
 		<div class="container">
 			<div class="row my-4">
 				<div class="col">
 					<h1 class="text-center">Liste des Produits</h1>
-					<a href="showCreate" class="float-start btn btn-success"> <i
-						class="fa-solid fa-plus"></i> Ajouter
+					<a href="showCreate" class="float-start btn btn-success"> <i class="fa-solid fa-plus"></i> Ajouter
 					</a>
 				</div>
 			</div>
-			<div th:if="${type=='success'}" class="my-4 alert alert-success"
-				role="alert" th:text="${msg}">aa</div>
-			<div th:if="${type=='warning'}" class="my-4 alert alert-warning"
-				role="alert" th:text="${msg}">aa</div>
-			<div th:if="${type=='danger'}" class="my-4 alert alert-danger"
-				role="alert" th:text="${msg}">aa</div>
+			<div th:if="${type=='success'}" class="my-4 alert alert-success" role="alert" th:text="${msg}">aa</div>
+			<div th:if="${type=='warning'}" class="my-4 alert alert-warning" role="alert" th:text="${msg}">aa</div>
+			<div th:if="${type=='danger'}" class="my-4 alert alert-danger" role="alert" th:text="${msg}">aa</div>
 			<div class="row my-4">
 				<table class="table table-dark table-striped">
 					<thead>
 						<th>ID</th>
 						<th>Nom Produit</th>
 						<th>Prix</th>
-						<th>Actions</th>
+						<th sec:authorize="hasRole('ADMIN')">Actions</th>
 					</thead>
 					<tr th:each="p:${produits.content}">
 						<td th:text="${p.idProduit }"></td>
 						<td th:text="${p.nomProduit }"></td>
 						<td th:text="${p.prixProduit }"></td>
-						<td><a class="btn btn-danger "
-							onclick="return confirm('Etes-vous sur ?')"
-							th:href="@{supprimerProduit(id=${p.idProduit},
-								page=${currentPage},size=${size})}"><i
-								class="fa-solid fa-trash"></i></a> <a class="btn btn-warning "
-							th:href="@{modifierProduit(id=${p.idProduit},
-								page=${currentPage},size=${size})}"><i
-								class="fa-solid fa-pen"></i></a></td>
+						<td sec:authorize="hasRole('ADMIN')" ><a class="btn btn-danger " onclick="return confirm('Etes-vous sur ?')" th:href="@{supprimerProduit(id=${p.idProduit},
+								page=${currentPage},size=${size})}"><i class="fa-solid fa-trash"></i></a> <a class="btn btn-warning " th:href="@{modifierProduit(id=${p.idProduit},
+								page=${currentPage},size=${size})}"><i class="fa-solid fa-pen"></i></a></td>
 					</tr>
 				</table>
 				<ul class="nav nav-pills">
 					<li th:each="page,status:${pages}"><a
-						th:class="${status.index==currentPage?'btn btn-primary':'btn' }"
-						th:href="@{ ListeProduits(page=${status.index}, size=${size} ) }"
-						Atelier Environnement de développement [by Najla Allouche]
-						Page 9
-th:text="${status.index }"></a></li>
+							th:class="${status.index==currentPage?'btn btn-primary':'btn' }"
+							th:href="@{ ListeProduits(page=${status.index}, size=${size} ) }" 
+							th:text="${status.index }"></a></li>
 				</ul>
 			</div>
 		</div>
 	</div>
 </body>
+
 </html>
