@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-	layout:decorator="template">
+	layout:decorate="template">
 <head>
 	<link rel="stylesheet" type="text/css"
 	href="webjars/bootstrap/4.3.1/css/bootstrap.min.css" />
@@ -15,27 +15,6 @@
 <title>Liste des Produits</title>
 </head>
 <body>
-	<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
-		<!-- Brand -->
-		<a class="navbar-brand" th:href="@{ListeProduits}">Gestion de produits</a>
-		<!-- Links -->
-		<ul class="navbar-nav">
-			<!-- Dropdown -->
-			<li class="nav-item dropdown">
-				<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-					Produits
-				  </button>
-				<div class="dropdown-menu">
-					<a class="dropdown-item" th:href="@{showCreate}">Ajouter</a> <a
-						class="dropdown-item" th:href="@{ListeProduits}">Lister</a>
-				</div></li>
-				<!-- search input bootstrap -->
-				<form class="ml-4 form-inline float-end" action="searchProduit" method="get">
-					<input name="name" class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-					<button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-				</form>
-		</ul>
-	</nav>
 	<div layout:fragment="Mycontent">
 		<div class="container">
 			<div class="row my-4">
