@@ -119,6 +119,6 @@ public class CatController {
 		modelMap.addAttribute("pages", new int[prods.getTotalPages()]);
 		modelMap.addAttribute("currentPage", page);
 		modelMap.addAttribute("name", name);
-		return "search";
+		return "listeProduits";
 	}
 }
