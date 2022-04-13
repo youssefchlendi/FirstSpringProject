@@ -33,6 +33,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/supprimerProduit", "/modifierProduit", "/updateProduit")
                 .hasAnyRole("ADMIN");
 
+        http.exceptionHandling().accessDeniedPage("/accessDenied");
         http.authorizeRequests().anyRequest().authenticated();
         http.formLogin();
     }
