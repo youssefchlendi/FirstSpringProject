@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorator="template">
+
+<head>
+	<link rel="stylesheet" type="text/css" href="webjars/bootstrap/4.3.1/css/bootstrap.min.css" />
+    <meta http-equiv="refresh" content="5;url=http://localhost:8080/produits/ListeProduits">
+    <meta charset="utf-8">
+    <title>Error</title>
+</head>
+
+<body>
+    <!-- you're not authorized using bootstrap -->
+    
+    <div layout:fragment="Mycontent" class="mt-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="alert alert-danger" role="alert">
+                        <h1>Vous n'êtes pas autorisé à accéder à cette page</h1>
+                        <p>Vous allez être redirigé vers la page d'accueil dans 5 secondes</p>
+                    </div>
+                </div>
+            </div>
+    </div>
+</body>
+
+</html>
