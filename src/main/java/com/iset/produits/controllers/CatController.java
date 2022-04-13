@@ -100,7 +100,7 @@ public class CatController {
 			modelMap.addAttribute("edit", true);
 			return "createProduit";
 		}
-		produitService.updateProduit(produit.getIdProduit(), produit);
+		produitService.saveProduit(produit);
 		Page<Produit> prods = produitService.getAllProduitsParPage(page, size);
 		modelMap.addAttribute("produits", prods);
 		modelMap.addAttribute("pages", new int[prods.getTotalPages()]);
