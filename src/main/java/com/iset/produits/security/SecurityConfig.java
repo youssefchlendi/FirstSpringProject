@@ -17,10 +17,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        PasswordEncoder passwordEncoder = passwordEncoder ();
-        auth.inMemoryAuthentication().withUser("admin").password(passwordEncoder.encode("admin")).roles("ADMIN");
-        auth.inMemoryAuthentication().withUser("youssef").password(passwordEncoder.encode("youssef")).roles("AGENT", "USER");
-        auth.inMemoryAuthentication().withUser("user").password(passwordEncoder.encode("user")).roles("USER");
+        PasswordEncoder passwordEncoder = passwordEncoder();
+        auth.inMemoryAuthentication().withUser("admin").password(passwordEncoder.encode("123")).roles("ADMIN");
+        auth.inMemoryAuthentication().withUser("youssef").password(passwordEncoder.encode("admin")).roles("AGENT",
+                "USER");
+        auth.inMemoryAuthentication().withUser("user").password(passwordEncoder.encode("youssef")).roles("USER");
     }
 
     @Override
@@ -32,7 +33,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests()
                 .antMatchers("/supprimerProduit", "/modifierProduit", "/updateProduit")
                 .hasAnyRole("ADMIN");
-
         http.exceptionHandling().accessDeniedPage("/accessDenied");
         http.authorizeRequests().anyRequest().authenticated();
         http.formLogin();
