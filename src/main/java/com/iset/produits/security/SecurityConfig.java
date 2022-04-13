@@ -26,7 +26,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-
+        http.formLogin().defaultSuccessUrl("/ListeProduits", true);
         http.authorizeRequests().antMatchers("/showCreate", "/saveProduit").hasAnyRole("ADMIN", "AGENT");
         http.authorizeRequests().antMatchers("/ListeProduits")
                 .hasAnyRole("ADMIN", "AGENT", "USER");
