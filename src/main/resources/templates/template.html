@@ -1,40 +1,55 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
-<head>
-	<link rel="stylesheet" type="text/css"
-	href="webjars/bootstrap/4.3.1/css/bootstrap.min.css" />
-	
-	<script type="text/javascript"
-	src="webjars/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-	<script src="webjars/jquery/3.5.1/jquery.min.js"></script>
-	
+<html 
+xmlns="http://www.w3.org/1999/xhtml"
+xmlns:th="http://www.thymeleaf.org" 
+xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 
-<meta charset="utf-8"/>
-<title>Gestion des Produits</title>
+<head>
+	<link rel="stylesheet" type="text/css" href="webjars/bootstrap/4.3.1/css/bootstrap.min.css" />
+
+	<script type="text/javascript" src="webjars/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+	<script src="webjars/jquery/3.5.1/jquery.min.js"></script>
+
+
+	<meta charset="utf-8" />
+	<title>Gestion des Produits</title>
 </head>
+
 <body>
 	<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
-		<!-- Brand -->
 		<a class="navbar-brand" th:href="@{ListeProduits}">Gestion de produits</a>
-		<!-- Links -->
 		<ul class="navbar-nav">
-			<!-- Dropdown -->
 			<li class="nav-item dropdown">
-				<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+				<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
+					data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 					Produits
-				  </button>
+				</button>
 				<div class="dropdown-menu">
-					<a class="dropdown-item" th:href="@{showCreate}">Ajouter</a> <a
-						class="dropdown-item" th:href="@{ListeProduits}">Lister</a>
-				</div></li>
-				<!-- search input bootstrap -->
-				<form class="ml-4 form-inline float-end" action="searchProduit" method="get">
-					<input name="name" class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-					<button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-				</form>
+					<a class="dropdown-item" sec:authorize="hasRole('ADMIN') || hasRole('AGENT')" th:href="@{showCreate}">Ajouter</a> <a class="dropdown-item"
+						th:href="@{ListeProduits}">Lister</a>
+				</div>
+			</li>
+			<form class="ml-4 form-inline float-end" action="searchProduit" method="get">
+				<input name="name" class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+				<button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+			</form>
+		</ul>
+
+		<ul class="navbar-nav ml-auto mr-5">
+			<li class="nav-item dropdown">
+				<a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+					<span sec:authentication="name"></span>
+				</a>
+				<div class="dropdown-menu">
+					<a sec:authorize="!isAuthenticated()" class="dropdown-item" th:href="@{login}">login</a>
+					<a sec:authorize="isAuthenticated()" class="dropdown-item" th:href="@{logout}">logout</a>
+					<a class="dropdown-item" href="@{login}">Profile</a>
+				</div>
+			</li>
 		</ul>
 	</nav>
 	<section layout:fragment="Mycontent"></section>
 </body>
+
 </html>
