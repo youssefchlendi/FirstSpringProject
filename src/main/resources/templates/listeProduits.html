@@ -34,6 +34,8 @@ layout:decorate="template">
 						<th>Prix</th>
 						<th sec:authorize="hasRole('ADMIN')">Actions</th>
 					</thead>
+					<tr th:if="${#arrays.isEmpty(produits.content)}">
+						<td colspan="4" class="text-center ">No products found ! </td></tr>
 					<tr th:each="p:${produits.content}">
 						<td th:text="${p.idProduit }"></td>
 						<td th:text="${p.nomProduit }"></td>
