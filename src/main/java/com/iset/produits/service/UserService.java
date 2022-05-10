@@ -6,7 +6,7 @@ import java.util.Set;
 import javax.validation.Valid;
 
 import java.util.HashSet;
-
+import com.iset.produits.security.MyUserDetail;
 import com.iset.produits.dao.RoleRepository;
 import com.iset.produits.dao.UserRepository;
 import com.iset.produits.entities.Role;
@@ -45,7 +45,8 @@ public class UserService implements UserDetailsService {
         Objects.requireNonNull(username);
         User user = userRepository.findUserWithName(username)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found"));
-        return user;
+                
+        return new MyUserDetail(user);
     }
 
     @GetMapping("/register")
