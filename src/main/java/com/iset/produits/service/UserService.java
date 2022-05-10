@@ -6,6 +6,8 @@ import java.util.Set;
 import javax.validation.Valid;
 
 import java.util.HashSet;
+import java.util.List;
+
 import com.iset.produits.security.MyUserDetail;
 import com.iset.produits.dao.RoleRepository;
 import com.iset.produits.dao.UserRepository;
@@ -45,31 +47,36 @@ public class UserService implements UserDetailsService {
         Objects.requireNonNull(username);
         User user = userRepository.findUserWithName(username)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found"));
-                
+
         return new MyUserDetail(user);
     }
 
     @GetMapping("/register")
     public String showRegister(ModelMap modelMap) {
+        List<Role> roles = roleRepository.findAll();
+        modelMap.addAttribute("roles", roles);
         modelMap.addAttribute("userForm", new UserForm());
         modelMap.addAttribute("reg", true);
 
         return "auth";
     }
+
     @PostMapping("/register")
-    public String register(@Valid UserForm userForm, BindingResult bindingResult, ModelMap modelMap) {
+    public String register(@Valid UserForm userForm, BindingResult bindingResult,Long role, ModelMap modelMap) {
         if (bindingResult.hasErrors()) {
-            System.out.println(userForm.toString());
+            List<Role> roles = roleRepository.findAll();
+            System.out.println(roles);
+            modelMap.addAttribute("roles", roles);
             modelMap.addAttribute("reg", true);
             modelMap.addAttribute("userForm", userForm);
             return "auth";
         }
-        this.saveUser(userForm.getUsername(), userForm.getPassword(), userForm.getConfirmedPassword());
+        this.saveUser(userForm.getUsername(), userForm.getPassword(), userForm.getConfirmedPassword(), role);
+
         return "redirect:/login";
     }
 
-
-    public User saveUser(String username, String password, String confirmedPassword) {
+    public User saveUser(String username, String password, String confirmedPassword, Long role) {
         User appUser = new User();
         if (userRepository.findUserWithName(username).isPresent() == true)
             throw new RuntimeException("User already exists");
@@ -78,7 +85,7 @@ public class UserService implements UserDetailsService {
         appUser.setUsername(username);
         Set<Role> roles = new HashSet<Role>();
 
-        Role r = roleRepository.findByName("ROLE_USER");
+        Role r = roleRepository.findById(role).get();
         roleRepository.save(r);
         roles.add(r);
         appUser.setRoles(roles);

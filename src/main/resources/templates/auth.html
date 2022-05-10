@@ -52,6 +52,13 @@
                                 <span th:errors=${userForm.confirmedPassword} class="text-danger"> </span>
 
                             </div>
+                            <div class="form-group">
+                                <label class="control-label">Role :</label>
+                                <select name="role" class="form-control">
+                                    <option th:each="role:${roles}" th:value="${role.id}" name="role" th:text="${role.name}"></option>
+                                </select>
+                            </div>
+
                             <button class="btn btn-primary">s'inscripre</button>
                             <a href="login" class="btn btn-primary">j'ai un compte</a>
                         </div>
