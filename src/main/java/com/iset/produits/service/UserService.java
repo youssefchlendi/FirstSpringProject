@@ -73,7 +73,8 @@ public class UserService implements UserDetailsService {
             throw new RuntimeException("Please confirm your password");
         appUser.setUsername(username);
         Set<Role> roles = new HashSet<Role>();
-        Role r = new Role("ROLE_USER");
+
+        Role r = roleRepository.findByName("ROLE_USER");
         roleRepository.save(r);
         roles.add(r);
         appUser.setRoles(roles);
