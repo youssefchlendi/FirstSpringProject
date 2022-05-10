@@ -45,6 +45,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+        http.exceptionHandling().accessDeniedPage("/accessDenied");
         http.csrf().disable()
                 .authenticationProvider(getProvider())
                 .formLogin().loginPage("/login")
@@ -60,11 +61,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers("/login").permitAll()
                 .antMatchers("/register").permitAll()
-                .antMatchers("/loggedout").permitAll()
                 .antMatchers("/logout").permitAll()
                 .antMatchers("/webjars/**").permitAll()
+                .antMatchers("/loggedout").permitAll()
+                // .hasAnyRole("USER", "ADMIN")
+                .antMatchers("/showCreate", "/saveProduit").hasAnyRole("ADMIN", "AGENT")
+                .antMatchers("/ListeProduits")
+                .hasAnyRole("ADMIN", "AGENT", "USER")
+                .antMatchers("/supprimerProduit", "/modifierProduit", "/updateProduit")
+                .hasAnyRole("ADMIN")
                 .anyRequest().authenticated();
-        http.exceptionHandling().accessDeniedPage("/accessDenied");
 
     }
 
@@ -96,7 +102,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         public void onLogoutSuccess(HttpServletRequest request, HttpServletResponse response,
                 Authentication authentication) throws IOException, ServletException {
             response.setStatus(HttpServletResponse.SC_OK);
-            response.sendRedirect("/produits/loggedout");
+            response.sendRedirect("/produits/login?logout=1");
         }
     }
 
