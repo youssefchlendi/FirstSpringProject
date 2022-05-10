@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorate="template">
+
+<head>
+    <meta charset="utf-8">
+    <title>Register</title>
+</head>
+
+<body>
+    <div layout:fragment="Mycontent">
+        <div class="container mt-5">
+            <div class="col-md-6 offset-md-3">
+                <div class="card">
+                    <div class="card-header">Inscription</div>
+                    <div class="card-body">
+                        <form th:action="@{register}" method="post">
+                            <div class="form-group">
+                                <label class="control-label">Utilisateur :</label>
+                                <input type="text" name="username" class="form-control" placeholder="Username"
+                                th:value="${userForm.username}" 
+                                >
+                                <span th:errors=${userForm.username} class="text-danger"> </span>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label">Mot de passe :</label>
+                                <input type="password" name="password" class="form-control" placeholder="Password"
+                                th:value="${userForm.password}" 
+                                >
+                                <span th:errors=${userForm.password} class="text-danger"> </span>
+
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label">Confirm mot de passe :</label>
+                                <input type="password" name="confirmedPassword" class="form-control" placeholder="Confirm mot de passe"
+                                th:value="${userForm.confirmedPassword}"
+                                >
+                                <span th:errors=${userForm.confirmedPassword} class="text-danger"> </span>
+
+                            </div>
+                            <button class="btn btn-primary">s'inscripre</button>
+                            <a href="login" class="btn btn-primary">j'ai un compte</a>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
