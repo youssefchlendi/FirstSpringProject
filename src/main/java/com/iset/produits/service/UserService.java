@@ -51,14 +51,17 @@ public class UserService implements UserDetailsService {
     @GetMapping("/register")
     public String showRegister(ModelMap modelMap) {
         modelMap.addAttribute("userForm", new UserForm());
-        return "register";
+        modelMap.addAttribute("reg", true);
+
+        return "auth";
     }
     @PostMapping("/register")
     public String register(@Valid UserForm userForm, BindingResult bindingResult, ModelMap modelMap) {
         if (bindingResult.hasErrors()) {
             System.out.println(userForm.toString());
+            modelMap.addAttribute("reg", true);
             modelMap.addAttribute("userForm", userForm);
-            return "register";
+            return "auth";
         }
         this.saveUser(userForm.getUsername(), userForm.getPassword(), userForm.getConfirmedPassword());
         return "redirect:/login";

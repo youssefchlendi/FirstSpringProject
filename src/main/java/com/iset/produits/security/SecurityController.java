@@ -25,9 +25,9 @@ public class SecurityController {
     public String login(ModelMap modelMap,@RequestParam(name = "error", defaultValue = "0") int error) {
         if (error == 1) {
             modelMap.addAttribute("error", "Veuillez vérifier vos identifiants");
-            return "login";
+            return "auth";
         }
-        return "login";
+        return "auth";
     }
 
     @GetMapping("/logout")

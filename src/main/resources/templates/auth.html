@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>Register</title>
+    <title>Connexion</title>
 </head>
 
 <body>
@@ -12,39 +12,54 @@
         <div class="container mt-5">
             <div class="col-md-6 offset-md-3">
                 <div class="card">
-                    <div class="card-header">Inscription</div>
+                    <div th:text="${reg}?'Inscription':'Connexion'" class="card-header"></div>
                     <div class="card-body">
-                        <form th:action="@{register}" method="post">
+
+                    <div class="alert alert-danger" th:if="${error!=null}">
+                        <p th:text="${error}"></p>
+                    </div>
+                    <form th:action="${reg}?@{register}:@{login}" method="post">
+                        <div th:if="!${reg}">
+                            <div class="form-group">
+                                <label class="control-label">Utilisateur :</label>
+                                <input type="text" name="username" class="form-control" placeholder="Username">
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label">Mot de passe :</label>
+                                <input type="password" name="password" class="form-control" placeholder="Mot de passe">
+                            </div>
+                            <button class="btn btn-primary">se connecter</button>
+                            <a href="register" class="btn btn-primary">Ajouter un Compte</a>
+                        </div>
+                        <div th:if="${reg}">
                             <div class="form-group">
                                 <label class="control-label">Utilisateur :</label>
                                 <input type="text" name="username" class="form-control" placeholder="Username"
-                                th:value="${userForm.username}" 
-                                >
+                                    th:value="${userForm.username}">
                                 <span th:errors=${userForm.username} class="text-danger"> </span>
                             </div>
                             <div class="form-group">
                                 <label class="control-label">Mot de passe :</label>
                                 <input type="password" name="password" class="form-control" placeholder="Password"
-                                th:value="${userForm.password}" 
-                                >
+                                    th:value="${userForm.password}">
                                 <span th:errors=${userForm.password} class="text-danger"> </span>
 
                             </div>
                             <div class="form-group">
                                 <label class="control-label">Confirm mot de passe :</label>
-                                <input type="password" name="confirmedPassword" class="form-control" placeholder="Confirm mot de passe"
-                                th:value="${userForm.confirmedPassword}"
-                                >
+                                <input type="password" name="confirmedPassword" class="form-control"
+                                    placeholder="Confirm mot de passe" th:value="${userForm.confirmedPassword}">
                                 <span th:errors=${userForm.confirmedPassword} class="text-danger"> </span>
 
                             </div>
                             <button class="btn btn-primary">s'inscripre</button>
                             <a href="login" class="btn btn-primary">j'ai un compte</a>
-                        </form>
-                    </div>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
+    </div>
     </div>
 </body>
 
