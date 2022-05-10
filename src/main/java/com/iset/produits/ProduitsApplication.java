@@ -17,7 +17,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.iset.produits.dao.RoleRepository;
 import com.iset.produits.entities.Produit;
+import com.iset.produits.entities.Role;
 import com.iset.produits.service.ProduitServiceImpl;
 
 @SpringBootApplication
@@ -25,6 +28,8 @@ import com.iset.produits.service.ProduitServiceImpl;
 public class ProduitsApplication implements CommandLineRunner {
     @Autowired
     private ProduitServiceImpl service;
+	@Autowired
+	private RoleRepository roleRepository;
 
     public static void main(String[] args) {
         SpringApplication.run(ProduitsApplication.class, args);
@@ -32,6 +37,13 @@ public class ProduitsApplication implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
+		// Role role = new Role("ROLE_ADMIN");
+		// Role role1 = new Role("ROLE_USER");
+		// Role role2 = new Role("ROLE_AGENT");
+		// roleRepository.save(role1);
+		// roleRepository.save(role2);
+		// roleRepository.save(role);
+
         //  Produit prod1 = new Produit("PC Asus", 1500.500, new Date());
         //  Produit prod2 = new Produit("PC Dell", 2000.500, new Date());
         //  Produit prod3 = new Produit("PC Toshiba", 2500.500, new Date());
