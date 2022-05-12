@@ -14,6 +14,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 public class AppAuthProvider extends DaoAuthenticationProvider {
     @Autowired
     UserService userDetailsService;
+    
 
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
@@ -21,7 +22,7 @@ public class AppAuthProvider extends DaoAuthenticationProvider {
         String name = auth.getName();
         String password = auth.getCredentials().toString();
         UserDetails user = userDetailsService.loadUserByUsername(name);
-        if (user == null) {
+        if (user == null || !user.getPassword().equals(password)) {
             throw new BadCredentialsException("Username/Password does not match for "
                     + auth.getPrincipal());
         }
