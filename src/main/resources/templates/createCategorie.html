@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="template">
+
+<head>
+	<link rel="stylesheet" type="text/css" href="webjars/bootstrap/4.3.1/css/bootstrap.min.css" />
+	<script type="text/javascript" src="webjars/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+	<script src="webjars/jquery/3.5.1/jquery.min.js"></script>
+	<meta charset="utf-8">
+	<title>Create Categorie</title>
+</head>
+
+<body>
+	<div layout:fragment="Mycontent">
+		<div class="container my-4">
+			<div class="row justify-content-center">
+				<div class="col-md-6">
+					<span class="anchor" id="formLogin"></span>
+					<!-- form card login -->
+					<div class="card card-outline-secondary">
+						<div class="card-header">
+							
+							<h3 th:text="${edit}?'Modifier Categorie':'Créer Categorie'" class="mb-0"></h3>
+						</div>
+						<div class="card-body">
+							<form th:action="${edit}?'updateCategorie':'saveCategorie'"  class="form" id="formLogin" name="formLogin" role="form" action="saveCategorie"
+								method="post">
+								<div class="form-group">
+									<input type="hidden" name="idCat" th:value="${categorie.idCat}"/>
+									<label class="control-label">Nom Categorie :</label> <input type="text"
+										name="nomCat" class="form-control" th:value="${categorie.nomCat}" /> <span
+										th:errors=${categorie.nomCat} class="text-danger"> </span>
+								</div>
+								<div class="form-group">
+									<label class="control-label">Description Categorie :</label> <input type="text"
+										name="descriptionCat" class="form-control" th:value="${categorie.descriptionCat}" />
+									<span th:errors=${categorie.descriptionCat} class="text-danger"> </span>
+								</div>
+								<input th:value="${edit}?'modifier':'ajouter'" class="btn btn-success my-3 btn-lg float-right"
+								type="submit" >
+
+									
+							</form>
+							
+						</div>
+						<!--/card-block-->
+					</div>
+					<!-- /form card login -->
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+
+</html>
