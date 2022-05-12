@@ -36,7 +36,7 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 					Categories
 				</button>
 				<div class="dropdown-menu">
-					<a class="dropdown-item" sec:authorize="hasRole('ADMIN') || hasRole('AGENT')" th:href="@{showCreateC}">Ajouter</a> <a class="dropdown-item"
+					<a class="dropdown-item" sec:authorize="hasRole('ADMIN') " th:href="@{showCreateC}">Ajouter</a> <a class="dropdown-item"
 						th:href="@{ListeCategories}">Lister</a>
 				</div>
 			</li>
