@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
-layout:decorate="template">
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security" layout:decorate="template">
 
 <head>
 	<link rel="stylesheet" type="text/css" href="webjars/bootstrap/4.3.1/css/bootstrap.min.css" />
@@ -17,9 +16,24 @@ layout:decorate="template">
 	<div layout:fragment="Mycontent">
 		<div class="container">
 			<div class="row my-4">
+				<form class="mb-4 form-inline w-100 mx-auto" action="searchProduit" method="get">
+					<div class="row col-12">
+						<div class="col-2"></div>
+						<div class="col-2"></div>
+					<div class="col-4">
+
+						<input name="name" class="form-control mr-sm-2" type="search" placeholder="Search"
+						aria-label="Search">
+						<button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+					</div>
+					<div class="col-2"></div>
+						<div class="col-2"></div>
+					</div>
+				</form>
 				<div class="col">
 					<h1 class="text-center">Liste des Produits</h1>
-					<a sec:authorize="hasAnyRole('ADMIN','AGENT')" href="showCreate" class="float-start btn btn-success"> <i class="fa-solid fa-plus"></i> Ajouter
+					<a sec:authorize="hasAnyRole('ADMIN','AGENT')" href="showCreate"
+						class="float-start btn btn-success"> <i class="fa-solid fa-plus"></i> Ajouter
 					</a>
 				</div>
 			</div>
