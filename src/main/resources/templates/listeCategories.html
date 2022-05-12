@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security" layout:decorate="template">
+
+<head>
+	<link rel="stylesheet" type="text/css" href="webjars/bootstrap/4.3.1/css/bootstrap.min.css" />
+	<script type="text/javascript" src="webjars/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+	<script src="webjars/jquery/3.5.1/jquery.min.js"></script>
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+	<meta charset="UTF-8">
+	<!-- <title>Liste des Categories</title> -->
+</head>
+
+<body>
+
+	<div layout:fragment="Mycontent">
+		<div class="container">
+			<div class="row my-4">
+				<form class="mb-4 form-inline w-100 mx-auto" action="searchCategorie" method="get">
+					<div class="row col-12">
+						<div class="col-2"></div>
+						<div class="col-2"></div>
+						<div class="col-4">
+
+							<input name="name" class="form-control mr-sm-2" type="search" placeholder="Search"
+								aria-label="Search">
+							<button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+						</div>
+						<div class="col-2"></div>
+						<div class="col-2"></div>
+					</div>
+				</form>
+				<div class="col">
+					<h1 class="text-center">Liste des Categories</h1>
+					<a sec:authorize="hasAnyRole('ADMIN','AGENT')" href="showCreateC"
+						class="float-start btn btn-success"> <i class="fa-solid fa-plus"></i> Ajouter
+					</a>
+				</div>
+			</div>
+			<div th:if="${type=='success'}" class="my-4 alert alert-success" role="alert" th:text="${msg}">aa</div>
+			<div th:if="${type=='warning'}" class="my-4 alert alert-warning" role="alert" th:text="${msg}">aa</div>
+			<div th:if="${type=='danger'}" class="my-4 alert alert-danger" role="alert" th:text="${msg}">aa</div>
+			<div class="row my-4">
+				<table class="table table-dark table-striped">
+					<thead>
+						<th>ID</th>
+						<th>Nom Categorie</th>
+						<th>Description</th>
+						<th sec:authorize="hasRole('ADMIN')">Actions</th>
+					</thead>
+					<tr th:if="${#arrays.isEmpty(categories.content)}">
+						<td colspan="4" class="text-center ">No products found ! </td></tr>
+					<tr th:each="p:${categories.content}">
+						<td th:text="${p.idCat }"></td>
+						<td th:text="${p.nomCat }"></td>
+						<td th:text="${p.descriptionCat }"></td>
+						<td sec:authorize="hasRole('ADMIN')" ><a class="btn btn-danger " onclick="return confirm('Etes-vous sur ?')" th:href="@{supprimerCategorie(id=${p.idCat},
+								page=${currentPage},size=${size})}"><i class="fa-solid fa-trash"></i></a> <a class="btn btn-warning " th:href="@{modifierCategorie(id=${p.idCat},
+								page=${currentPage},size=${size})}"><i class="fa-solid fa-pen"></i></a></td>
+					</tr>
+				</table>
+				<ul class="nav nav-pills">
+					<li th:each="page,status:${pages}"><a
+							th:class="${status.index==currentPage?'btn btn-primary':'btn' }"
+							th:href="@{ ListeCategories(page=${status.index}, size=${size} ) }" 
+							th:text="${status.index }"></a></li>
+				</ul>
+			</div>
+		</div>
+	</div>
+</body>
+
+</html>
