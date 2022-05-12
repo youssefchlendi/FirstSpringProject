@@ -19,7 +19,7 @@ layout:decorate="template">
 			<div class="row my-4">
 				<div class="col">
 					<h1 class="text-center">Liste des Produits</h1>
-					<a href="showCreate" class="float-start btn btn-success"> <i class="fa-solid fa-plus"></i> Ajouter
+					<a sec:authorize="hasAnyRole('ADMIN','AGENT')" href="showCreate" class="float-start btn btn-success"> <i class="fa-solid fa-plus"></i> Ajouter
 					</a>
 				</div>
 			</div>
