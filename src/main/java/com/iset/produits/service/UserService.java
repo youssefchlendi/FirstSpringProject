@@ -8,9 +8,9 @@ import javax.validation.Valid;
 import java.util.HashSet;
 import java.util.List;
 
-import com.iset.produits.security.MyUserDetail;
 import com.iset.produits.dao.RoleRepository;
 import com.iset.produits.dao.UserRepository;
+import com.iset.produits.entities.MyUserDetail;
 import com.iset.produits.entities.Role;
 import com.iset.produits.entities.User;
 import com.iset.produits.entities.UserForm;

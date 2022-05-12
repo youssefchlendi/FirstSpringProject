@@ -1,4 +1,4 @@
-package com.iset.produits.security;
+package com.iset.produits.entities;
 
 
 
@@ -6,9 +6,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Set;
-
-import com.iset.produits.entities.Role;
-import com.iset.produits.entities.User;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
