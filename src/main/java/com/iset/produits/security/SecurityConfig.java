@@ -7,7 +7,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.iset.produits.dao.AppAuthProvider;
 import com.iset.produits.service.UserService;
 
 import org.springframework.beans.factory.annotation.Autowired;
