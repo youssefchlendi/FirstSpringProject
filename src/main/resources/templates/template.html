@@ -30,10 +30,16 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 						th:href="@{ListeProduits}">Lister</a>
 				</div>
 			</li>
-			<form class="ml-4 form-inline float-end" action="searchProduit" method="get">
-				<input name="name" class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-				<button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-			</form>
+			<li class="ml-2 nav-item dropdown">
+				<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
+					data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+					Categories
+				</button>
+				<div class="dropdown-menu">
+					<a class="dropdown-item" sec:authorize="hasRole('ADMIN') || hasRole('AGENT')" th:href="@{showCreateC}">Ajouter</a> <a class="dropdown-item"
+						th:href="@{ListeCategories}">Lister</a>
+				</div>
+			</li>
 		</ul>
 
 		<ul class="navbar-nav ml-auto mr-5">
