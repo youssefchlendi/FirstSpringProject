@@ -17,7 +17,7 @@ import com.iset.produits.service.CategorieService;
 import org.springframework.data.domain.Page;
 
 @Controller
-public class Category {
+public class CategoryController {
 	@Autowired
 	CategorieService CategorieService;
 
