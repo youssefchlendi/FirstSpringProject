@@ -2,7 +2,6 @@ package com.iset.produits.security;
 
 import java.io.IOException;
 
-import javax.naming.AuthenticationException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -19,7 +18,6 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.access.AccessDeniedHandler;
@@ -85,20 +83,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         @Override
         public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
                 Authentication authentication) throws IOException, ServletException {
-            String password = request.getParameter("password");
-            String username = request.getParameter("username");
-            System.out.println("username : " + username);
-            System.out.println("password : " + password);
-            UserDetails user = userDetailsService.loadUserByUsername(username);
-            System.out.println("username : " + user.getUsername());
-            System.out.println("password : " + user.getPassword());
-            if (!user.getPassword().equals(password)) {
-                response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-                response.sendRedirect("/produits/login?error=1");
-            }else{
                 response.sendRedirect("/produits/ListeProduits");
                 response.setStatus(HttpServletResponse.SC_OK);
-            }
+    
         }
     }
 
@@ -108,15 +95,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response,
                 org.springframework.security.core.AuthenticationException exception)
                 throws IOException, ServletException {
-            String password = request.getParameter("password");
-            String username = request.getParameter("username");
-            UserDetails user = userDetailsService.loadUserByUsername(username);
-            if (user == null || !user.getPassword().equals(password)) {
+
                 response.sendRedirect("/produits/login?error=1");
                 response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-            }
-            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-            response.sendRedirect("/produits/login?error=1");
+
         }
 
     }
@@ -143,6 +125,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         return new AccessDeniedHandlerImpl();
     }
 
-    
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
 
 }
