@@ -14,11 +14,13 @@ import com.iset.produits.entities.MyUserDetail;
 import com.iset.produits.entities.Role;
 import com.iset.produits.entities.User;
 import com.iset.produits.entities.UserForm;
+import com.iset.produits.security.SecurityConfig;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.ModelMap;
@@ -37,6 +39,8 @@ public class UserService implements UserDetailsService {
     @Autowired
     private RoleRepository roleRepository;
     
+    @Autowired
+    SecurityConfig sc;
 
     @Autowired
     public UserService(UserRepository userRepository) {
@@ -89,8 +93,8 @@ public class UserService implements UserDetailsService {
         Role r = roleRepository.findById(role).get();
         roleRepository.save(r);
         roles.add(r);
+        appUser.setPassword(sc.passwordEncoder().encode(password));
         appUser.setRoles(roles);
-        appUser.setPassword(password);
         userRepository.save(appUser);
         return appUser;
     }
