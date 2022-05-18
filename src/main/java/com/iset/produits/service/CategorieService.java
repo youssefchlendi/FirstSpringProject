@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.iset.produits.entities.Categorie;
-import com.iset.produits.entities.Produit;
 import com.iset.produits.dao.*;
 @Service
 public class CategorieService{
