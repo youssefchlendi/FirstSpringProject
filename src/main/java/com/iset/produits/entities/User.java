@@ -1,6 +1,5 @@
 package com.iset.produits.entities;
 
-import java.io.Serializable;
 import java.util.Collection;
 import java.util.Set;
 import java.util.HashSet;
@@ -24,7 +23,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 @Entity
 @Table(name = "USER")
-public class User implements Serializable, UserDetails {
+public class User implements  UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer userId;

@@ -18,9 +18,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.iset.produits.dao.RoleRepository;
+// import com.iset.produits.dao.RoleRepository;
 import com.iset.produits.entities.Produit;
-import com.iset.produits.entities.Role;
 import com.iset.produits.service.ProduitServiceImpl;
 
 @SpringBootApplication
@@ -28,8 +27,8 @@ import com.iset.produits.service.ProduitServiceImpl;
 public class ProduitsApplication implements CommandLineRunner {
     @Autowired
     private ProduitServiceImpl service;
-	@Autowired
-	private RoleRepository roleRepository;
+	// @Autowired
+	// private RoleRepository roleRepository;
 
     public static void main(String[] args) {
         SpringApplication.run(ProduitsApplication.class, args);

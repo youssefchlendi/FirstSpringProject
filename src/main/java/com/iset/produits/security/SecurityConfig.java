@@ -33,8 +33,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     public static final String AUTHORITIES_CLAIM_NAME = "roles";
     @Autowired
     UserService userDetailsService;
-    @Autowired
-    private AccessDeniedHandler accessDeniedHandler;
+    // @Autowired
+    // private AccessDeniedHandler accessDeniedHandler;
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
